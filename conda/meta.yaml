@@ -1,0 +1,29 @@
+package:
+  name: ldsc
+  version: 1.0.0
+
+build:
+  preserve_egg_dir: False
+
+source:
+  path: ..
+
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - setuptools
+    - python
+    - pandas
+    - bitarray
+
+test:
+  imports:
+    - ldsc
+
+about:
+  home: https://github.com/bulik/ldsc
+  license: GPLv3
+  summary: LDSC

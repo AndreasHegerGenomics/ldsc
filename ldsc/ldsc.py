@@ -561,12 +561,22 @@ parser.add_argument('--samp-prev',default=None,
     help='Sample prevalence of binary phenotype (for conversion to liability scale).')
 parser.add_argument('--pop-prev',default=None,
     help='Population prevalence of binary phenotype (for conversion to liability scale).')
+# Added by AH:
+parser.add_argument(
+    "--n-chromosomes",
+    type=int,
+    default=22,
+    help="number of chromosomes to process, default=22")
 
-if __name__ == '__main__':
+
+def main():
 
     args = parser.parse_args()
     if args.out is None:
         raise ValueError('--out is required.')
+
+    # AH: Patch in number of chromosomes
+    sumstats._N_CHR = args.n_chromosomes
 
     log = Logger(args.out+'.log')
     try:
@@ -640,3 +650,8 @@ if __name__ == '__main__':
         log.log('Analysis finished at {T}'.format(T=time.ctime()) )
         time_elapsed = round(time.time()-start_time,2)
         log.log('Total time elapsed: {T}'.format(T=sec_to_str(time_elapsed)))
+
+
+if __name__ == '__main__':
+    sys.exit(main())
+
