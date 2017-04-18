@@ -696,7 +696,7 @@ def munge_sumstats(args, p=True):
         if not args.a1_inc:
             log.log(
                 check_median(dat.SIGNED_SUMSTAT, signed_sumstat_null, 0.1, sign_cname,
-                             on_error=options.check_median_action))
+                             on_error=args.check_median_action))
             dat.Z *= (-1) ** (dat.SIGNED_SUMSTAT < signed_sumstat_null)
             dat.drop('SIGNED_SUMSTAT', inplace=True, axis=1)
         # do this last so we don't have to worry about NA values in the rest of
