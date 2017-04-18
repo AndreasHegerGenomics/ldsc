@@ -359,12 +359,13 @@ def p_to_z(P, N):
     return np.sqrt(chi2.isf(P, 1))
 
 
-def check_median(x, expected_median, tolerance, name):
+def check_median(x, expected_median, tolerance, name, on_error="raise"):
     '''Check that median(x) is within tolerance of expected_median.'''
     m = np.median(x)
     if np.abs(m - expected_median) > tolerance:
         msg = 'WARNING: median value of {F} is {V} (should be close to {M}). This column may be mislabeled.'
-        raise ValueError(msg.format(F=name, M=expected_median, V=round(m, 2)))
+        if on_error == "raise":
+            raise ValueError(msg.format(F=name, M=expected_median, V=round(m, 2)))
     else:
         msg = 'Median value of {F} was {C}, which seems sensible.'.format(
             C=m, F=name)
@@ -511,6 +512,8 @@ parser.add_argument('--a1-inc', default=False, action='store_true',
                     help='A1 is the increasing allele.')
 parser.add_argument('--keep-maf', default=False, action='store_true',
                     help='Keep the MAF column (if one exists).')
+parser.add_argument('--check-median-action', default="raise", type=str,
+                    help='if "raise", then raise Exception if median check has failed. All others, ignore.')
 
 
 # set p = False for testing in order to prevent printing
@@ -692,7 +695,8 @@ def munge_sumstats(args, p=True):
         dat.rename(columns={'P': 'Z'}, inplace=True)
         if not args.a1_inc:
             log.log(
-                check_median(dat.SIGNED_SUMSTAT, signed_sumstat_null, 0.1, sign_cname))
+                check_median(dat.SIGNED_SUMSTAT, signed_sumstat_null, 0.1, sign_cname,
+                             on_error=options.check_median_action))
             dat.Z *= (-1) ** (dat.SIGNED_SUMSTAT < signed_sumstat_null)
             dat.drop('SIGNED_SUMSTAT', inplace=True, axis=1)
         # do this last so we don't have to worry about NA values in the rest of
