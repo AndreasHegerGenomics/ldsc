@@ -582,7 +582,9 @@ parser.add_argument(
     "--n-chromosomes",
     type=int,
     default=22,
-    help="number of chromosomes to process, default=22")
+    help="number of chromosomes to process. Generally not necessary to change as this "
+    "parameter determines the number of chromosome in the reference panel to read. "
+    "default=22")
 
 
 def main():
