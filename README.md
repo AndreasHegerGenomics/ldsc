@@ -1,22 +1,32 @@
 
-#LDSC (LD SCore) `v1.0.0`
+# LDSC (LD SCore) `v1.0.0`
 
 `ldsc` is a command line tool for estimating heritability and genetic correlation from GWAS summary statistics. `ldsc` also computes LD Scores.
 
 ## Getting Started
 
-First, you will need to install python as well as the packages listed under the requirements header below. The easiest way to do this is with the [Anaconda](https://store.continuum.io/cshop/anaconda/) python distribution. All of the required packages come standard with Ananconda (Broad users: do `use Anaconda`).
 
-In order to download `ldsc`, you should clone this repository via the command
+
+In order to download `ldsc`, you should clone this repository via the commands
 ```  
 git clone https://github.com/bulik/ldsc.git
+cd ldsc
 ```
-Once you have installed `ldsc` as well as the required packages, typing
+
+In order to install the Python dependencies, you will need the [Anaconda](https://store.continuum.io/cshop/anaconda/) Python distribution and package manager. After installing Anaconda, run the following commands to create an environment with LDSC's dependencies:
+
+```
+conda env create --file environment.yml
+source activate ldsc
+```
+
+Once the above has completed, you can run:
+
 ```
 ./ldsc.py -h
 ./munge_sumstats.py -h
 ```
-will print a list of all command-line options. If these commands fail with an error, then something as gone wrong during the installation process. 
+to print a list of all command-line options. If these commands fail with an error, then something as gone wrong during the installation process. 
 
 Short tutorials describing the four basic functions of `ldsc` (estimating LD Scores, h2 and partitioned h2, genetic correlation, the LD Score regression intercept) can be found in the wiki. If you would like to run the tests, please see the wiki.
 
@@ -45,12 +55,18 @@ Fast-forward
  ```
 which tells you which files were changed. If you have modified the `ldsc` source code, `git pull` may fail with an error such as `error: Your local changes to the following files would be overwritten by merge:`. 
 
+In case the Python dependencies have changed, you can update the LDSC environment with
+
+```
+conda env update --file environment.yml
+```
+
 ## Where Can I Get LD Scores?
 
 You can download [European](https://data.broadinstitute.org/alkesgroup/LDSCORE/eur_w_ld_chr.tar.bz2) and [East Asian LD Scores](https://data.broadinstitute.org/alkesgroup/LDSCORE/eas_ldscores.tar.bz2) from 1000 Genomes [here](https://data.broadinstitute.org/alkesgroup/LDSCORE/). These LD Scores are suitable for basic LD Score analyses (the LD Score regression intercept, heritability, genetic correlation, cross-sex genetic correlation). You can download partitioned LD Scores for partitioned heritability estimation [here](http://data.broadinstitute.org/alkesgroup/LDSCORE/).
 
 
-##Support
+## Support
 
 Before contacting us, please try the following:
 
@@ -63,7 +79,7 @@ If that doesn't work, you can get in touch with us via the [google group](https:
 Issues with LD Hub?  Email ld-hub@bristol.ac.uk
 
 
-##Citation
+## Citation
 
 If you use the software or the LD Score regression intercept, please cite
 
@@ -88,25 +104,12 @@ Zheng, et al. LD Hub: a centralized database and web interface to perform LD sco
 https://doi.org/10.1093/bioinformatics/btw613
 
 
-##Requirements
-
-1. `Python (3 > version >= 2.7)`
-2. `argparse`
-3. `bitarray`
-4. `numpy`
-5. `pandas`
-6. `scipy`
-
-The python data science stack is still under constant development, with frequent breaking changes. We will attempt to keep `ldsc` compatible with the newest releases of `numpy/scipy/pandas`, and we therefore recommend that you make sure you are running the latest versions of these three packages. This is most easily accomplished using the [`Anaconda`]((https://store.continuum.io/cshop/anaconda/) ) python distribution and the included package manager `conda`.  
-
-`ldsc` is not presently compatible with python 3.x.
-
-##License
+## License
 
 This project is licensed under GNU GPL v3.
 
 
-##Authors
+## Authors
 
 Brendan Bulik-Sullivan (Broad Institute of MIT and Harvard)
 
